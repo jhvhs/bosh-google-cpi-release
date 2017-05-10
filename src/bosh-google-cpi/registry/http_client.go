@@ -177,7 +177,10 @@ func (c HTTPClient) httpClient() (http.Client, error) {
 			RootCAs:            certPool,
 		}
 
-		httpClient.Transport = &http.Transport{TLSClientConfig: tlsConfig}
+		httpClient.Transport = &http.Transport{
+			TLSClientConfig: tlsConfig,
+			TLSNextProto: map[string]func(authority string, c *tls.Conn) http.RoundTripper{},
+		}
 	}
 
 	return httpClient, nil
